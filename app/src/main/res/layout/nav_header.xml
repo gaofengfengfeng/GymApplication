@@ -7,11 +7,19 @@
     android:orientation="vertical"
     android:padding="20dp">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/profile_image"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:src="@drawable/athelet_1" />
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/athelet_1"
+        app:civ_border_width="2dp"
+        />
+    <!--<ImageView-->
+        <!--android:id="@+id/profile_image"-->
+        <!--android:layout_width="64dp"-->
+        <!--android:layout_height="64dp"-->
+        <!--android:src="@drawable/athelet_1" />-->
 
 
     <TextView
