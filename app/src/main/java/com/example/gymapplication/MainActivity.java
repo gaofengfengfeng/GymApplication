@@ -1,5 +1,6 @@
 package com.example.gymapplication;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -60,7 +61,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.id.nav_share:
-                Toast.makeText(this, "Share menu clicked ", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, CheeseDetailActivity.class);
+                intent.putExtra(CheeseDetailActivity.EXTRA_NAME, "CheeseCake");
+                startActivity(intent);
+//                Toast.makeText(this, "Share menu clicked ", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_send:
                 Toast.makeText(this, "Send", Toast.LENGTH_SHORT).show();
