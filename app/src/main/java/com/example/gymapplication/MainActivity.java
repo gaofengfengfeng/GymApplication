@@ -22,6 +22,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 import static android.support.v4.view.GravityCompat.START;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ShowFragment showFragment;
     private DemoFragment demoFragment;
     private CoachFragment coachFragment;
+    private CircleImageView header;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initViewPager();
 
         drawer = findViewById(R.id.drawer_layout);
+
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -57,6 +61,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navigationView.setCheckedItem(R.id.nav_home);
 
         }
+
+        View headLayout = navigationView.getHeaderView(0);
+        header = headLayout.findViewById(R.id.profile_image);
+
+        //点击头像
+        header.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initViewPager() {
