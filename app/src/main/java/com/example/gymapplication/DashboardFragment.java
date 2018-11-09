@@ -42,6 +42,11 @@ public class DashboardFragment extends Fragment {
         return fragment;
     }
 
+    public static DashboardFragment newInstance() {
+        DashboardFragment fragment = new DashboardFragment();
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +54,7 @@ public class DashboardFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override

@@ -22,4 +22,8 @@
     <color name="colorAquaDark">#3bafda</color>
     <color name="colorPinkRose">#EC87C0</color>
     <color name="colorPinkRoseDark">#D770AD</color>
+
+    <color name="text_color_33">#333333</color>
+    <color name="text_color_66">#666666</color>
+    <color name="text_color_99">#999999</color>
 </resources>
