@@ -1,9 +1,8 @@
-package com.example.gymapplication;
+package com.example.gymapplication.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.support.v7.widget.SearchView;
+
+import com.example.gymapplication.R;
+import com.example.gymapplication.adapter.SportsAdapter;
+import com.example.gymapplication.model.SportsModel;
 
 public class SearchListActivity extends AppCompatActivity {
     public static final String BundleKeyTitle = "search_page_title";

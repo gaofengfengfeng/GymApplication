@@ -1,10 +1,9 @@
-package com.example.gymapplication;
+package com.example.gymapplication.activity;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -16,8 +15,15 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.Toast;
+
+import com.example.gymapplication.R;
+import com.example.gymapplication.adapter.ViewPagerAdapter;
+import com.example.gymapplication.fragment.CoachFragment;
+import com.example.gymapplication.fragment.DashboardFragment;
+import com.example.gymapplication.fragment.DemoFragment;
+import com.example.gymapplication.fragment.ShowFragment;
+import com.example.gymapplication.fragment.SportFragment;
 
 import java.util.ArrayList;
 import java.util.List;

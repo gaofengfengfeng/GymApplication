@@ -1,4 +1,4 @@
-package com.example.gymapplication;
+package com.example.gymapplication.adapter;
 
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;

@@ -1,4 +1,4 @@
-package com.example.gymapplication;
+package com.example.gymapplication.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -8,9 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.gymapplication.R;
+import com.example.gymapplication.util.RecyclerAdapterUtils;
+import com.example.gymapplication.model.SportsModel;
+
 import java.util.List;
 
-public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder>{
+public class SportsAdapter extends RecyclerView.Adapter<SportsAdapter.MyViewHolder>{
     private List<SportsModel> mDataset;
     Context mContext;
 
@@ -30,17 +34,15 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         // each data item is just a string in this case
         public ImageView mIcon;
         public TextView mTxtName;
-        public View container;
         public MyViewHolder(View v) {
             super(v);
-            mIcon = v.findViewById(R.id.sportIcon);
+            mIcon = v.findViewById(R.id.sportImage);
             mTxtName = v.findViewById(R.id.sportName);
-            container = v.findViewById(R.id.viewContainer);
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public CategoryAdapter(Context ctx, List<SportsModel> myDataset) {
+    public SportsAdapter(Context ctx, List<SportsModel> myDataset) {
         mContext = ctx;
         mDataset = myDataset;
     }
@@ -55,11 +57,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
     }
     // Create new views (invoked by the layout manager)
     @Override
-    public CategoryAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
-                                                           int viewType) {
+    public SportsAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
+                                                         int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_category, parent, false);
+                .inflate(R.layout.item_sports, parent, false);
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,8 +83,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         SportsModel info = mDataset.get(position);
         holder.mTxtName.setText(info.name);
         holder.mIcon.setImageResource(info.icon);
-        holder.mIcon.setBackgroundColor(mContext.getResources().getColor(info.bgDark));
-        holder.container.setBackgroundColor(mContext.getResources().getColor(info.bg));
+        holder.mIcon.setBackgroundColor(mContext.getResources().getColor(info.bg));
     }
 
     // Return the size of your dataset (invoked by the layout manager)

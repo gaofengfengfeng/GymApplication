@@ -1,4 +1,4 @@
-package com.example.gymapplication;
+package com.example.gymapplication.util;
 
 import android.content.Context;
 import android.widget.ImageView;

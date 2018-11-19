@@ -1,4 +1,4 @@
-package com.example.gymapplication;
+package com.example.gymapplication.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.gymapplication.activity.CheeseDetailActivity;
+import com.example.gymapplication.model.FigureModel;
+import com.example.gymapplication.R;
+import com.example.gymapplication.adapter.CoachAdapter;
 
 import java.util.concurrent.TimeUnit;
 

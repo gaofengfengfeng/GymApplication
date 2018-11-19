@@ -1,25 +1,28 @@
-package com.example.gymapplication;
+package com.example.gymapplication.adapter;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.gymapplication.model.FigureModel;
+import com.example.gymapplication.R;
+import com.example.gymapplication.util.RecyclerAdapterUtils;
 
 import java.util.List;
 
-public class SportsAdapter extends RecyclerView.Adapter<SportsAdapter.MyViewHolder>{
-    private List<SportsModel> mDataset;
-    Context mContext;
+import de.hdodenhof.circleimageview.CircleImageView;
 
-    public interface OnSportItemClick{
-        void onItemClick(int position);
+public class CoachAdapter extends RecyclerView.Adapter<CoachAdapter.MyViewHolder>{
+    private List<FigureModel> mDataset;
+
+    public interface OnCoachItemClick{
+        void onCoachClick(int position);
     }
 
-    private OnSportItemClick mListener;
-    public void setOnSportItemClick(OnSportItemClick listener) {
+    private OnCoachItemClick mListener;
+    public void setOnCoachItemClick(OnCoachItemClick listener) {
         mListener = listener;
     }
 
@@ -28,42 +31,43 @@ public class SportsAdapter extends RecyclerView.Adapter<SportsAdapter.MyViewHold
     // you provide access to all the views for a data item in a view holder
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public ImageView mIcon;
+        public CircleImageView mAvatar;
         public TextView mTxtName;
+        public TextView mTxtExtra;
         public MyViewHolder(View v) {
             super(v);
-            mIcon = v.findViewById(R.id.sportImage);
-            mTxtName = v.findViewById(R.id.sportName);
+            mAvatar = v.findViewById(R.id.img_avator);
+            mTxtName = v.findViewById(R.id.txt_name);
+            mTxtExtra = v.findViewById(R.id.txt_extra);
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public SportsAdapter(Context ctx, List<SportsModel> myDataset) {
-        mContext = ctx;
+    public CoachAdapter(List<FigureModel> myDataset) {
         mDataset = myDataset;
     }
 
-    public void updateDataset(List<SportsModel> myDataset) {
+    public void updateDataset(List<FigureModel> myDataset) {
         mDataset = myDataset;
         notifyDataSetChanged();
     }
 
-    public SportsModel getModelByPos(int position) {
+    public FigureModel getModelByPos(int position) {
         return mDataset.get(position);
     }
     // Create new views (invoked by the layout manager)
     @Override
-    public SportsAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
-                                                         int viewType) {
+    public CoachAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
+                                                        int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_sports, parent, false);
+                .inflate(R.layout.item_coach, parent, false);
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mListener != null) {
                     int position = RecyclerAdapterUtils.getViewHolder(view).getAdapterPosition();
-                    mListener.onItemClick(position);
+                    mListener.onCoachClick(position);
                 }
             }
         });
@@ -76,10 +80,10 @@ public class SportsAdapter extends RecyclerView.Adapter<SportsAdapter.MyViewHold
     public void onBindViewHolder(MyViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        SportsModel info = mDataset.get(position);
+        FigureModel info = mDataset.get(position);
         holder.mTxtName.setText(info.name);
-        holder.mIcon.setImageResource(info.icon);
-        holder.mIcon.setBackgroundColor(mContext.getResources().getColor(info.bg));
+        holder.mTxtExtra.setText(info.intro);
+        holder.mAvatar.setImageResource(info.avatar);
     }
 
     // Return the size of your dataset (invoked by the layout manager)

@@ -1,4 +1,6 @@
-package com.example.gymapplication;
+package com.example.gymapplication.model;
+
+import com.example.gymapplication.R;
 
 import java.util.ArrayList;
 import java.util.List;

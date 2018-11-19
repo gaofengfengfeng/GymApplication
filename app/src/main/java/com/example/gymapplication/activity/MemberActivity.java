@@ -1,4 +1,4 @@
-package com.example.gymapplication;
+package com.example.gymapplication.activity;
 
 import android.content.Intent;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.example.gymapplication.R;
 
 public class MemberActivity extends AppCompatActivity {
 

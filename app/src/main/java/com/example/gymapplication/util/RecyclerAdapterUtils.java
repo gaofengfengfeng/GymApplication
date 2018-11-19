@@ -1,4 +1,4 @@
-package com.example.gymapplication;
+package com.example.gymapplication.util;
 
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;

@@ -1,4 +1,4 @@
-package com.example.gymapplication;
+package com.example.gymapplication.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.gymapplication.R;
 
 public class DemoFragment extends Fragment {
     public static final String BundleKeyArg1 = "bundle_key_arg1";

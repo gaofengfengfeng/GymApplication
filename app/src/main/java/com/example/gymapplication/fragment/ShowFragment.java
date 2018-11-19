@@ -1,4 +1,4 @@
-package com.example.gymapplication;
+package com.example.gymapplication.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,18 +6,21 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.gymapplication.activity.CheeseDetailActivity;
+import com.example.gymapplication.util.GlideImageLoader;
+import com.example.gymapplication.R;
+import com.example.gymapplication.model.SportsModel;
+import com.example.gymapplication.adapter.CategoryAdapter;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class ShowFragment extends Fragment implements OnBannerListener {
     View rootView;

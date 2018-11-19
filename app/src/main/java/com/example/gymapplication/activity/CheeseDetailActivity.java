@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.gymapplication;
+package com.example.gymapplication.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,6 +24,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+
+import com.example.gymapplication.R;
 
 public class CheeseDetailActivity extends AppCompatActivity {
 
