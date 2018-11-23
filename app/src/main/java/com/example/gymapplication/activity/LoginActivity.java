@@ -11,8 +11,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.gymapplication.MyApplication;
 import com.example.gymapplication.R;
+import com.example.gymapplication.model.User;
+import com.example.gymapplication.model.network.LoginReq;
+import com.example.gymapplication.model.network.LoginResponse;
+import com.example.gymapplication.network.UserService;
+import com.example.gymapplication.network.Retrofit;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -20,12 +31,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button loginUsernameClear, loginPasswordClear, loginPasswordVisible, login;
     private TextView passwordForget, loginRegister;
     private boolean passwordVisibleIsOpen = false;
+    private MyApplication myApplication;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        myApplication = (MyApplication) getApplication();
         initView();
     }
 
@@ -113,9 +126,34 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.login:
                 // 登录
-                //Intent intent = new Intent(this, DisplayMessageActivity.class);
-                //startActivity(intent);
-                onBackPressed();
+                UserService userService = Retrofit.getUserRetrofit().create(UserService.class);
+
+                LoginReq loginReq = new LoginReq();
+                loginReq.setUsername(loginUsername.getText().toString().trim());
+                loginReq.setPassword(loginPassword.getText().toString().trim());
+                Call<LoginResponse> call = userService.login(loginReq);
+
+
+                call.enqueue(new Callback<LoginResponse>() {
+                    @Override
+                    public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                        // Get result Repo from response.body()
+                        if (response.body().getErrNo() == 0) {
+                            User user = new User();
+                            user.setUsername(response.body().getData().getUsername());
+                            myApplication.setLoginUser(user);
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(LoginActivity.this, "用户名/密码错误", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<LoginResponse> call, Throwable t) {
+
+                    }
+                });
                 break;
             case R.id.password_forget:
                 // 忘记密码
@@ -130,6 +168,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    // 设置密码是否可见
     private void changePwdVisibleSwitch(boolean flag) {
         if (flag) {
             // 设置密码可见，并将按钮修改为密码不可见
@@ -140,7 +179,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             loginPasswordVisible.setBackgroundResource(R.drawable.invisible);
             loginPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
         }
-
     }
+
 }
 

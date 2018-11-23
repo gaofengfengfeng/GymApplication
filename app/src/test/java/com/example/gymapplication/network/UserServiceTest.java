@@ -2,7 +2,6 @@ package com.example.gymapplication.network;
 
 import com.example.gymapplication.model.network.LoginReq;
 import com.example.gymapplication.model.network.LoginResponse;
-import com.example.gymapplication.model.network.LoginRet;
 
 import org.junit.Test;
 
@@ -12,9 +11,7 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static org.junit.Assert.*;
-
-public class LoginServiceTest {
+public class UserServiceTest {
 
     @Test
     public void login() {
@@ -23,12 +20,12 @@ public class LoginServiceTest {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        LoginService loginService = retrofit.create(LoginService.class);
+        UserService userService = retrofit.create(UserService.class);
 
         LoginReq loginReq = new LoginReq();
         loginReq.setUsername("gaofeng");
         loginReq.setPassword("123456");
-        Call<LoginResponse> call = loginService.login(loginReq);
+        Call<LoginResponse> call = userService.login(loginReq);
         try {
             System.out.println(call.execute().body().getData().getUsername());
         } catch (IOException e) {

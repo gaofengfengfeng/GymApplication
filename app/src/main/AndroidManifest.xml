@@ -3,6 +3,7 @@
     package="com.example.gymapplication">
 
     <application
+        android:name="com.example.gymapplication.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -23,5 +24,7 @@
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.RegisterActivity"></activity>
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET"/>
 
 </manifest>

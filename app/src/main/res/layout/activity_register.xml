@@ -175,7 +175,7 @@
         </LinearLayout>
     </LinearLayout>
     <Button
-        android:id="@+id/login"
+        android:id="@+id/register"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/input"
