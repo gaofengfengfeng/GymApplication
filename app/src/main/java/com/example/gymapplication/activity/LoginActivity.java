@@ -10,14 +10,15 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.gymapplication.R;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText loginUsername, loginPassword;
-    private Button loginUsernameClear, loginPasswordClear, loginPasswordVisible, login,
-            passwordForget, loginRegister;
+    private Button loginUsernameClear, loginPasswordClear, loginPasswordVisible, login;
+    private TextView passwordForget, loginRegister;
     private boolean passwordVisibleIsOpen = false;
 
     @Override
