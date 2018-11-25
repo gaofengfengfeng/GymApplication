@@ -51,12 +51,14 @@ public class MyCoachFragment extends Fragment {
         recyclerView.setLayoutManager(mLayoutManager);
 
         List<FigureModel> figureModelList = new ArrayList<>();
-        for (Trainer trainer : myApplication.getTrainerList()) {
-            int avatar = 1;
-            String name = trainer.getName();
-            String intro = "我是洪伟辉";
-            FigureModel figureModel = new FigureModel(avatar, name, intro);
-            figureModelList.add(figureModel);
+        if(myApplication.getTrainerList() != null){
+            for (Trainer trainer : myApplication.getTrainerList()) {
+                int avatar = 1;
+                String name = trainer.getName();
+                String intro = "我是洪伟辉";
+                FigureModel figureModel = new FigureModel(avatar, name, intro);
+                figureModelList.add(figureModel);
+            }
         }
         //figureModelList = FigureModel.getRandomFigures(5);
         coachAdapter = new CoachAdapter(getContext(), figureModelList);

@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +18,10 @@ import com.example.gymapplication.activity.CheeseDetailActivity;
 import com.example.gymapplication.model.FigureModel;
 import com.example.gymapplication.R;
 import com.example.gymapplication.adapter.CoachAdapter;
+import com.example.gymapplication.model.SportsModel;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -30,6 +34,8 @@ public class CoachFragment extends Fragment {
     RecyclerView mRecyclerView;
     LinearLayoutManager mLayoutManager;
     CoachAdapter mAdapter;
+    List<FigureModel> allCoaches = new ArrayList<>();
+
 
     public static CoachFragment newInstance() {
         Bundle args = new Bundle();
@@ -97,5 +103,34 @@ public class CoachFragment extends Fragment {
                         mRefreshLayout.setRefreshing(false);
                     }
                 });
+    }
+
+    public void searchCoach(String word) {
+        List<FigureModel> coachModels = filterDataset(word);
+        if (word == null || word.equals("")) {
+            coachModels = getAllCoaches();
+        }
+        mAdapter.updateDataset(coachModels);
+    }
+
+
+    public List<FigureModel> getAllCoaches() {
+        if (allCoaches == null || allCoaches.size() == 0) {
+            allCoaches = FigureModel.getRandomFigures(20);
+        }
+        return allCoaches;
+    }
+
+    public List<FigureModel> filterDataset(String word) {
+        List<FigureModel> ds = new ArrayList<>();
+        if (TextUtils.isEmpty(word)) {
+            return ds;
+        }
+        for (FigureModel item : getAllCoaches()) {
+            if (item.name.toLowerCase().contains(word.toLowerCase())) {
+                ds.add(item);
+            }
+        }
+        return ds;
     }
 }

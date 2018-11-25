@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_my_coach:
                 mVpContent.setCurrentItem(5);
-                myApplication.setActiveFragment(0);
+                myApplication.setActiveFragment(5);
                 break;
             case R.id.nav_member:
                 Intent intent = new Intent(this, MemberActivity.class);
@@ -183,7 +183,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public boolean onQueryTextChange(String newText) {
                 //在文字改变的时候回调，newText是改变之后的文字
-                sportFragment.searchSport(newText);
+                if (myApplication.getActiveFragment().equals(1)){
+                    sportFragment.searchSport(newText);
+                } else if (myApplication.getActiveFragment().equals(4)){
+                    coachFragment.searchCoach(newText);
+                } else {
+                    sportFragment.searchSport(newText);
+                }
+
                 return false;
             }
         });
@@ -192,7 +199,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View v) {
                 //开始搜索的时候，设置显示搜索页面
-                mVpContent.setCurrentItem(1);
+                if (myApplication.getActiveFragment().equals(1)) {
+                    mVpContent.setCurrentItem(1);
+                } else if (myApplication.getActiveFragment().equals(4)) {
+                    mVpContent.setCurrentItem(4);
+                } else if (myApplication.getActiveFragment().equals(5)) {
+                    mVpContent.setCurrentItem(5);
+                } else {
+                    mVpContent.setCurrentItem(1);
+                }
             }
         });
 
@@ -201,7 +216,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public boolean onClose() {
                 //关闭搜索按钮的时候，设置显示默认页面
-                mVpContent.setCurrentItem(0);
+                mVpContent.setCurrentItem(myApplication.getActiveFragment());
                 return false;
             }
         });
