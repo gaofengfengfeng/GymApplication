@@ -18,6 +18,7 @@ import java.util.List;
 
 import android.support.v7.widget.SearchView;
 
+import com.example.gymapplication.MyApplication;
 import com.example.gymapplication.R;
 import com.example.gymapplication.adapter.SportsAdapter;
 import com.example.gymapplication.model.SportsModel;
@@ -27,6 +28,7 @@ public class SearchListActivity extends AppCompatActivity {
     SearchView mSearchView;
     SportsAdapter mAdapter;
     List<SportsModel> allSports = new ArrayList<>();
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

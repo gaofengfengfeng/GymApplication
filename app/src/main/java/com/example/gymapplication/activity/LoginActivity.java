@@ -15,11 +15,15 @@ import android.widget.Toast;
 
 import com.example.gymapplication.MyApplication;
 import com.example.gymapplication.R;
+import com.example.gymapplication.model.Trainer;
 import com.example.gymapplication.model.User;
 import com.example.gymapplication.model.network.LoginReq;
 import com.example.gymapplication.model.network.LoginResponse;
 import com.example.gymapplication.network.UserService;
 import com.example.gymapplication.network.Retrofit;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,7 +42,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        myApplication = (MyApplication) getApplication();
+        myApplication = MyApplication.getInstance();
         initView();
     }
 
@@ -133,7 +137,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 loginReq.setPassword(loginPassword.getText().toString().trim());
                 Call<LoginResponse> call = userService.login(loginReq);
 
-
                 call.enqueue(new Callback<LoginResponse>() {
                     @Override
                     public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
@@ -141,7 +144,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         if (response.body().getErrNo() == 0) {
                             User user = new User();
                             user.setUsername(response.body().getData().getUsername());
+
                             myApplication.setLoginUser(user);
+                            myApplication.setTrainerList(response.body().getData().getFriendList());
+
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
                         } else {
@@ -151,7 +157,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     @Override
                     public void onFailure(Call<LoginResponse> call, Throwable t) {
-
+                        System.out.println(call.request().url().toString());
+                        System.out.println(t.fillInStackTrace());
                     }
                 });
                 break;

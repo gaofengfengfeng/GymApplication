@@ -12,9 +12,6 @@ import android.widget.Toast;
 
 import com.example.gymapplication.MyApplication;
 import com.example.gymapplication.R;
-import com.example.gymapplication.model.User;
-import com.example.gymapplication.model.network.LoginReq;
-import com.example.gymapplication.model.network.LoginResponse;
 import com.example.gymapplication.model.network.RegisterReq;
 import com.example.gymapplication.model.network.RegisterResponse;
 import com.example.gymapplication.network.Retrofit;
@@ -36,7 +33,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        myApplication = (MyApplication) getApplication();
+        myApplication = MyApplication.getInstance();
         initView();
     }
 
@@ -95,6 +92,49 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             }
         });
 
+        login_username.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    // 此处为得到焦点时的处理内容
+                } else {
+                    // 此处为失去焦点时的处理内容
+                }
+            }
+        });
+
+        login_email.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    // 此处为得到焦点时的处理内容
+                } else {
+                    // 此处为失去焦点时的处理内容
+                }
+            }
+        });
+
+        login_password.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    // 此处为得到焦点时的处理内容
+                } else {
+                    // 此处为失去焦点时的处理内容
+                }
+            }
+        });
+
+        login_password_verify.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    // 此处为得到焦点时的处理内容
+                } else {
+                    // 此处为失去焦点时的处理内容
+                }
+            }
+        });
         register.setOnClickListener(this);
     }
 
@@ -104,32 +144,40 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
             case R.id.register:
                 // 注册
-                UserService userService = Retrofit.getUserRetrofit().create(UserService.class);
+                // 判断资料是否填写完全
+                if (login_username.getText().toString().equals("") || login_email.getText().toString().equals("") ||
+                        login_password.getText().toString().equals("") || login_password_verify.getText().toString().equals("")) {
+                    Toast.makeText(RegisterActivity.this, "不能有非空项", Toast.LENGTH_SHORT).show();
+                } else if (!login_password.getText().toString().equals(login_password_verify.getText().toString())) {
+                    Toast.makeText(RegisterActivity.this, "两次密码输入不一致", Toast.LENGTH_SHORT).show();
+                } else {
+                    UserService userService = Retrofit.getUserRetrofit().create(UserService.class);
 
-                RegisterReq registerReq = new RegisterReq();
-                registerReq.setUsername(login_username.getText().toString().trim());
-                registerReq.setPassword(login_password.getText().toString().trim());
-                registerReq.setEmail(login_email.getText().toString().trim());
-                Call<RegisterResponse> call = userService.register(registerReq);
+                    RegisterReq registerReq = new RegisterReq();
+                    registerReq.setUsername(login_username.getText().toString().trim());
+                    registerReq.setPassword(login_password.getText().toString().trim());
+                    registerReq.setEmail(login_email.getText().toString().trim());
+                    Call<RegisterResponse> call = userService.register(registerReq);
 
 
-                call.enqueue(new Callback<RegisterResponse>() {
-                    @Override
-                    public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
-                        // Get result Repo from response.body()
-                        if (response.body().getErrNo() == 0) {
-                            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                            startActivity(intent);
-                        } else {
-                            Toast.makeText(RegisterActivity.this, "注册失败", Toast.LENGTH_SHORT).show();
+                    call.enqueue(new Callback<RegisterResponse>() {
+                        @Override
+                        public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
+                            // Get result Repo from response.body()
+                            if (response.body().getErrNo() == 0) {
+                                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(RegisterActivity.this, "注册失败", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<RegisterResponse> call, Throwable t) {
+                        @Override
+                        public void onFailure(Call<RegisterResponse> call, Throwable t) {
 
-                    }
-                });
+                        }
+                    });
+                }
                 break;
             default:
                 break;

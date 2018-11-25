@@ -20,6 +20,10 @@
             android:icon="@drawable/ic_schedule"
             android:title="Coaches" />
         <item
+            android:id="@+id/nav_my_coach"
+            android:icon="@drawable/ic_schedule"
+            android:title="MyCoaches" />
+        <item
             android:id="@+id/nav_member"
             android:icon="@drawable/ic_schedule"
             android:title="ClubMember" />

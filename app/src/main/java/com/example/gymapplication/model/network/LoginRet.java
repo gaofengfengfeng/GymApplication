@@ -1,5 +1,7 @@
 package com.example.gymapplication.model.network;
 
+import com.example.gymapplication.model.Trainer;
+
 import java.util.List;
 
 public class LoginRet {
@@ -7,37 +9,7 @@ public class LoginRet {
     private String nickname;
     private String token;
     private String portrait;
-    private List<Friend> friendList;
-
-    public static class Friend {
-        private String portrait;
-        private String name;
-        private String username;
-
-        public String getPortrait() {
-            return portrait;
-        }
-
-        public void setPortrait(String portrait) {
-            this.portrait = portrait;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getUsername() {
-            return username;
-        }
-
-        public void setUsername(String username) {
-            this.username = username;
-        }
-    }
+    private List<Trainer> friendList;
 
     public String getUsername() {
         return username;
@@ -71,11 +43,11 @@ public class LoginRet {
         this.portrait = portrait;
     }
 
-    public List<Friend> getFriendList() {
+    public List<Trainer> getFriendList() {
         return friendList;
     }
 
-    public void setFriendList(List<Friend> friendList) {
+    public void setFriendList(List<Trainer> friendList) {
         this.friendList = friendList;
     }
 }

@@ -38,10 +38,13 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
 
-     // http请求
+    // http请求
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.0.0'
     // json
     implementation 'com.alibaba:fastjson:1.2.37'
+
+    // rxbinding
+    implementation 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
 
 }

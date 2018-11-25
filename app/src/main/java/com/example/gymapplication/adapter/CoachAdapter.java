@@ -1,5 +1,6 @@
 package com.example.gymapplication.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.gymapplication.model.FigureModel;
 import com.example.gymapplication.R;
+import com.example.gymapplication.model.SportsModel;
 import com.example.gymapplication.util.RecyclerAdapterUtils;
 
 import java.util.List;
@@ -16,6 +18,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CoachAdapter extends RecyclerView.Adapter<CoachAdapter.MyViewHolder>{
     private List<FigureModel> mDataset;
+    Context mContext;
 
     public interface OnCoachItemClick{
         void onCoachClick(int position);
@@ -44,6 +47,11 @@ public class CoachAdapter extends RecyclerView.Adapter<CoachAdapter.MyViewHolder
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public CoachAdapter(List<FigureModel> myDataset) {
+        mDataset = myDataset;
+    }
+
+    public CoachAdapter(Context ctx, List<FigureModel> myDataset) {
+        mContext = ctx;
         mDataset = myDataset;
     }
 

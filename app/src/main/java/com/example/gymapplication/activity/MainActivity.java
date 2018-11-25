@@ -17,11 +17,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.gymapplication.MyApplication;
 import com.example.gymapplication.R;
 import com.example.gymapplication.adapter.ViewPagerAdapter;
 import com.example.gymapplication.fragment.CoachFragment;
 import com.example.gymapplication.fragment.DashboardFragment;
 import com.example.gymapplication.fragment.DemoFragment;
+import com.example.gymapplication.fragment.MyCoachFragment;
 import com.example.gymapplication.fragment.ShowFragment;
 import com.example.gymapplication.fragment.SportFragment;
 
@@ -40,7 +42,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ShowFragment showFragment;
     private DemoFragment demoFragment;
     private CoachFragment coachFragment;
+    private MyCoachFragment myCoachFragment;
     private CircleImageView header;
+    private MyApplication myApplication;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
         initViewPager();
 
+        myApplication = MyApplication.getInstance();
         drawer = findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -95,6 +100,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         list.add(demoFragment);
         coachFragment = CoachFragment.newInstance();
         list.add(coachFragment);
+        myCoachFragment = myCoachFragment.newInstance();
+        list.add(myCoachFragment);
 
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), list);
@@ -108,15 +115,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (item.getItemId()) {
             case R.id.nav_home:
                 mVpContent.setCurrentItem(0);
+                myApplication.setActiveFragment(0);
                 break;
             case R.id.nav_info:
                 mVpContent.setCurrentItem(2);
+                myApplication.setActiveFragment(2);
                 break;
             case R.id.nav_schedule:
                 mVpContent.setCurrentItem(1);
+                myApplication.setActiveFragment(1);
                 break;
             case R.id.nav_coachlist:
                 mVpContent.setCurrentItem(4);
+                myApplication.setActiveFragment(4);
+                supportInvalidateOptionsMenu();
+                break;
+            case R.id.nav_my_coach:
+                mVpContent.setCurrentItem(5);
+                myApplication.setActiveFragment(0);
                 break;
             case R.id.nav_member:
                 Intent intent = new Intent(this, MemberActivity.class);
