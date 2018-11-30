@@ -201,18 +201,5 @@
         android:text="登录"
         android:textColor="#3aadfd"
         android:textSize="18dp" />
-    <TextView
-        android:id="@+id/password_forget"
-        android:clickable="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/input"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="28dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginRight="28dp"
-        android:text="忘记密码？"
-        android:textColor="#3aadfd"
-        android:textSize="18dp" />
 
 </RelativeLayout>

@@ -14,7 +14,7 @@
         <item
             android:id="@+id/nav_schedule"
             android:icon="@drawable/ic_schedule"
-            android:title="Schedule" />
+            android:title="Sports" />
         <item
             android:id="@+id/nav_coachlist"
             android:icon="@drawable/ic_schedule"
@@ -23,6 +23,10 @@
             android:id="@+id/nav_my_coach"
             android:icon="@drawable/ic_schedule"
             android:title="MyCoaches" />
+        <item
+            android:id="@+id/nav_video"
+            android:icon="@drawable/ic_schedule"
+            android:title="Video" />
         <item
             android:id="@+id/nav_member"
             android:icon="@drawable/ic_schedule"

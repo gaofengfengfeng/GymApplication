@@ -26,6 +26,7 @@ import com.example.gymapplication.fragment.DemoFragment;
 import com.example.gymapplication.fragment.MyCoachFragment;
 import com.example.gymapplication.fragment.ShowFragment;
 import com.example.gymapplication.fragment.SportFragment;
+import com.example.gymapplication.fragment.VideoFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ShowFragment showFragment;
     private DemoFragment demoFragment;
     private CoachFragment coachFragment;
+    private VideoFragment videoFragment;
     private MyCoachFragment myCoachFragment;
     private CircleImageView header;
     private MyApplication myApplication;
@@ -102,7 +104,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         list.add(coachFragment);
         myCoachFragment = myCoachFragment.newInstance();
         list.add(myCoachFragment);
-
+        videoFragment = VideoFragment.newInstance();
+        list.add(videoFragment);
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), list);
         //MainVPAdapter adapter = new MainVPAdapter(getSupportFragmentManager(), list);
@@ -134,6 +137,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 mVpContent.setCurrentItem(5);
                 myApplication.setActiveFragment(5);
                 break;
+            case R.id.nav_video:
+                mVpContent.setCurrentItem(6);
+                myApplication.setActiveFragment(6);
+                break;
             case R.id.nav_member:
                 Intent intent = new Intent(this, MemberActivity.class);
                 intent.putExtra(MemberActivity.EXTRA_NAME, "Member Register");
@@ -148,6 +155,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_send:
                 Toast.makeText(this, "Send", Toast.LENGTH_SHORT).show();
                 break;
+
         }
 
         drawer.closeDrawer(START);

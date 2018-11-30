@@ -31,4 +31,14 @@ public class Constant {
             "Gym doesn't change live, People do.",
             "Gym doesn't change live, People do."
     };
+
+    static final String[] PHONE  = {
+            "12345678909",
+            "23456789012",
+            "34567890123",
+            "45678901234",
+            "56789012345",
+            "67890123456",
+            "78901234567"
+    };
 }
