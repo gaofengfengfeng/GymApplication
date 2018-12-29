@@ -1,9 +1,13 @@
 package com.example.gymapplication.activity;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.CursorLoader;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -27,6 +31,7 @@ import com.example.gymapplication.fragment.MyCoachFragment;
 import com.example.gymapplication.fragment.ShowFragment;
 import com.example.gymapplication.fragment.SportFragment;
 import com.example.gymapplication.fragment.VideoFragment;
+import com.example.gymapplication.provider.TrainProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +52,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private MyCoachFragment myCoachFragment;
     private CircleImageView header;
     private MyApplication myApplication;
+
+    // 暂存insert后的uri
+    private Uri uri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,19 +129,59 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 myApplication.setActiveFragment(0);
                 break;
             case R.id.nav_info:
+                // 添加一个教练
+                ContentValues values = new ContentValues();
+                values.put(TrainProvider.TRAINER_NAME, "zhangsan");
+                uri = getContentResolver().insert(TrainProvider.CONTENT_URI, values);
+                assert uri != null;
+                Toast.makeText(getBaseContext(), uri.toString(), Toast.LENGTH_LONG).show();
+
                 mVpContent.setCurrentItem(2);
                 myApplication.setActiveFragment(2);
                 break;
             case R.id.nav_schedule:
+
+                // 删除一个教练
+                Integer count = getContentResolver().delete(uri, null, null);
+                Toast.makeText(getBaseContext(), String.valueOf(count), Toast.LENGTH_LONG).show();
+
                 mVpContent.setCurrentItem(1);
                 myApplication.setActiveFragment(1);
                 break;
             case R.id.nav_coachlist:
+
+                // 获取所有教练的列表
+                Uri allTitles = Uri.parse("content://com.example.gymapplication.provider/trainers");
+                CursorLoader cursorLoader = new CursorLoader(
+                        this,
+                        allTitles,
+                        null,
+                        null,
+                        null,
+                        // 默认以trainer_name列从大到小排序
+                        "trainer_name desc"
+                );
+                Cursor c = cursorLoader.loadInBackground();
+                if (c.moveToFirst()) {
+                    do {
+                        String string = c.getString(c.getColumnIndex(TrainProvider.ID))
+                                + ", " + c.getString(c.getColumnIndex(TrainProvider.TRAINER_NAME));
+                        Toast.makeText(this, string, Toast.LENGTH_SHORT).show();
+                    } while (c.moveToNext());
+                }
+
                 mVpContent.setCurrentItem(4);
                 myApplication.setActiveFragment(4);
                 supportInvalidateOptionsMenu();
                 break;
             case R.id.nav_my_coach:
+
+                // 更新某个教练的信息
+                ContentValues value = new ContentValues();
+                value.put(TrainProvider.TRAINER_NAME, "zhangsan111111111");
+                Integer num = getContentResolver().update(uri, value, null, null);
+                System.out.println(num);
+
                 mVpContent.setCurrentItem(5);
                 myApplication.setActiveFragment(5);
                 break;
@@ -191,9 +239,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public boolean onQueryTextChange(String newText) {
                 //在文字改变的时候回调，newText是改变之后的文字
-                if (myApplication.getActiveFragment().equals(1)){
+                if (myApplication.getActiveFragment().equals(1)) {
                     sportFragment.searchSport(newText);
-                } else if (myApplication.getActiveFragment().equals(4)){
+                } else if (myApplication.getActiveFragment().equals(4)) {
                     coachFragment.searchCoach(newText);
                 } else {
                     sportFragment.searchSport(newText);
