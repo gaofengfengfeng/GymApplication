@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.gymapplication.MyApplication;
@@ -27,6 +28,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private MyApplication myApplication;
 
     private EditText login_username, login_email, login_password, login_password_verify;
+    private TextView to_login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         login_password_verify = findViewById(R.id.login_password_verify);
         login_username_clear = findViewById(R.id.login_username_clear);
         login_password_clear = findViewById(R.id.login_password_clear);
+        to_login = findViewById(R.id.login_register);
 
         login_username.addTextChangedListener(new TextWatcher() {
             @Override
@@ -136,12 +139,17 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             }
         });
         register.setOnClickListener(this);
+        to_login.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
+            case R.id.login_register:
+                // 登录
+                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                startActivity(intent);
+                break;
             case R.id.register:
                 // 注册
                 // 判断资料是否填写完全

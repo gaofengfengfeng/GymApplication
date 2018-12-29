@@ -1,18 +1,25 @@
 package com.example.gymapplication.activity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONException;
+import com.alibaba.fastjson.JSONObject;
 import com.example.gymapplication.MyApplication;
 import com.example.gymapplication.R;
 import com.example.gymapplication.model.Trainer;
@@ -21,6 +28,9 @@ import com.example.gymapplication.model.network.LoginReq;
 import com.example.gymapplication.model.network.LoginResponse;
 import com.example.gymapplication.network.UserService;
 import com.example.gymapplication.network.Retrofit;
+import com.tencent.tauth.IUiListener;
+import com.tencent.tauth.Tencent;
+import com.tencent.tauth.UiError;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,12 +40,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
-
+    private static String TENCENT_ID = "1108069492";
     private EditText loginUsername, loginPassword;
-    private Button loginUsernameClear, loginPasswordClear, loginPasswordVisible, login;
+    private Button loginUsernameClear, loginPasswordClear, loginPasswordVisible, login, qqLogin;
     private TextView passwordForget, loginRegister;
     private boolean passwordVisibleIsOpen = false;
     private MyApplication myApplication;
+    private Tencent mTencent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +66,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         login = findViewById(R.id.login);
         passwordForget = findViewById(R.id.password_forget);
         loginRegister = findViewById(R.id.login_register);
+        qqLogin = findViewById(R.id.qq_login);
 
         loginUsername.addTextChangedListener(new TextWatcher() {
             @Override
@@ -110,11 +122,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         login.setOnClickListener(this);
         passwordForget.setOnClickListener(this);
         loginRegister.setOnClickListener(this);
+        qqLogin.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
+        Intent intent;
         switch (v.getId()) {
+            case R.id.qq_login:
+                mTencent = Tencent.createInstance(TENCENT_ID, this.getApplicationContext());
+                mTencent.login(LoginActivity.this, "all", new BaseUiListener());
+                break;
             case R.id.login_username_clear:
                 // 清除用户名
                 loginUsername.setText("");
@@ -167,7 +185,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.login_register:
                 // 注册
-                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
                 break;
             default:
@@ -188,5 +206,48 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    //qq登录后，回调的类
+    private class BaseUiListener implements IUiListener {
+
+        @Override
+        public void onComplete(Object response) {
+            System.out.println("*****************************complete");
+            Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+//            try {
+//                Log.v("----TAG--", "-------------"+response.toString());
+//                String openidString = ((JSONObject) response).getString("openid");
+//                mTencent.setOpenId(openidString);
+//                mTencent.setAccessToken(((JSONObject) response).getString("access_token"),((JSONObject) response).getString("expires_in"));
+//                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//                startActivity(intent);
+//                Log.v("TAG", "-------------"+openidString);
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+        }
+
+        @Override
+        public void onError(UiError uiError) {
+            System.out.println("*****************************error");
+            Toast.makeText(getApplicationContext(), "onError", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+        }
+
+        @Override
+        public void onCancel() {
+            System.out.println("*****************************cancel");
+            Toast.makeText(getApplicationContext(), "onCancel", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Tencent.onActivityResultData(requestCode, resultCode,data, new BaseUiListener());
+    }
 }
 
